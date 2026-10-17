@@ -80,8 +80,10 @@ dialogs use the XDG desktop portal.
 
 Install Rust with [rustup](https://rustup.rs) and the
 [Visual Studio Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) with the
-"Desktop development with C++" workload (the linker). On Windows on ARM, also select the MSVC
-ARM64 build tools so the build is native rather than emulated x64.
+"Desktop development with C++" workload (the linker). On Windows on ARM, use the ARM64 rustup
+(`rustc -vV` shows `host: aarch64-pc-windows-msvc`) and also select the MSVC ARM64 build tools,
+which that toolchain needs to link. An x64 toolchain also works, but it builds an x64 binary
+that runs under emulation.
 
 ```powershell
 cargo build --release

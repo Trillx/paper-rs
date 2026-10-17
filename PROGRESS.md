@@ -225,9 +225,10 @@ are credited in `THIRD_PARTY.md`.
 * `PAPER_RS_REQUIRE_GPU=1 cargo test`: 162 tests (108 unit + 54 integration), all passing;
   the GPU tests ran on the Adreno. pdftoppm is not installed, so the PDF test checked
   structure only.
-* Rendering matches the Linux (lavapipe) references. Of the 25 PNGs the tests rewrite, at
-  most 0.003% of pixels differ by more than 16/255 (anti-aliasing), except the home and trash
-  screens, which differ only in the printed projects-folder path. `m6_export.svg` matches the
+* Rendering matches the Linux (lavapipe) references. Of the 26 PNGs the tests write, one
+  (`m6_export_svg_via_resvg.png`) is byte-identical and the others have at most 0.0031% of
+  pixels differing by more than 16/255 (anti-aliasing), except the home and trash screens,
+  which differ only in the printed projects-folder path. `m6_export.svg` matches the
   committed file; `m6_launch_plan.paper-rs` differs in the last digit of three ink pressures
   (platform libm rounding). The regenerated files were not committed.
 * `cargo clippy --all-targets`: one warning, `clippy::drop_non_drop` at `tests/perf.rs:105`
@@ -236,7 +237,9 @@ are credited in `THIRD_PARTY.md`.
   and `--screenshot --demo` renders on the Adreno under x64 emulation. Not run on x64
   hardware.
 * Real window: `paper-rs --demo` opens and draws at 150% scaling; wgpu picks the Adreno
-  Vulkan driver. The MCP server listens on `127.0.0.1:29980`.
+  Vulkan driver. The MCP server listens on `127.0.0.1:29980`. With `WGPU_BACKEND=dx12` the
+  window runs on DirectX 12, and headless renders on DX12 and GL (via D3D12) match the
+  Vulkan one to within 1/255 per channel.
 * MCP end to end: Claude Code (`claude -p` with `--mcp-config`) created the "Windows check"
   project, a "Hello" artboard and its heading over HTTP, then a sticky note through
   `paper-rs-mcp.exe`. Both appeared live in the window and the project autosaved
